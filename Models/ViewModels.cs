@@ -66,7 +66,7 @@ namespace EMS.Models
         public int RoleId { get; set; }
 
         [Required]
-        [Range(0, 10000000, ErrorMessage = "Please enter a valid salary amount.")]
+        [Range(10000, 10000000, ErrorMessage = "Salary amount must be at least 10000 according to system policy.")]
         [Display(Name = "Base Salary")]
         public int BaseSalary { get; set; }
 

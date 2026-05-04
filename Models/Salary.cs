@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace EMS.Models;
 
 /// <summary>
@@ -18,6 +20,7 @@ public class Salary
     /// <summary>
     /// Base salary amount.
     /// </summary>
+    [Range(10000, int.MaxValue, ErrorMessage = "Salary amount must be at least 10000.")]
     public int Amount { get; set; }
 
     /// <summary>

@@ -10,6 +10,7 @@
 <div class="row">
     <div class="col-md-6">
         <form asp-action="UpdateSalary" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="employeeId" value="@Model.Eid" />
             <input type="hidden" name="roleId" value="@Model.RoleId" />
 
@@ -24,6 +25,7 @@
             <div class="form-group mb-3">
                 <label for="baseSalary">Base Salary</label>
                 <input type="number" class="form-control" id="baseSalary" name="baseSalary" value="@Model.Amount" required />
+                <span class="text-danger">@Html.ValidationMessage("Amount")</span>
             </div>
             <button type="submit" class="btn btn-primary">Update Salary</button>
             <a asp-action="Index" class="btn btn-secondary">Cancel</a>

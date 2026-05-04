@@ -42,13 +42,20 @@ namespace EMS.Controllers
         /// <returns>The index view with salary records.</returns>
         public async Task<IActionResult> Index()
         {
-            var salaries = await _context.Salaries
-                .Include(s => s.Employee)
-                .Include(s => s.Role)
-                .OrderBy(s => s.Employee!.EName)
+            var employees = await _context.Employees
+                .Include(e => e.SalaryRecords)
+                .ThenInclude(s => s.Role)
+                .OrderBy(e => e.EName)
                 .ToListAsync();
 
-            return View(salaries);
+            // Flatten the list so that employees without salary records still appear in the table
+            var model = employees.SelectMany(e => 
+                e.SalaryRecords.Any() 
+                    ? e.SalaryRecords 
+                    : new List<Salary> { new Salary { Employee = e, Eid = e.Eid, Amount = 0 } }
+            ).ToList();
+
+            return View(model);
         }
 
         /// <summary>
@@ -87,15 +94,23 @@ namespace EMS.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            _context.Salaries.Add(new Salary
+            try
             {
-                Eid = model.EmployeeId,
-                RoleId = model.RoleId,
-                Amount = 1000 // Ensure this meets the minimum required by the DB CHECK constraint
-            });
+                _context.Salaries.Add(new Salary
+                {
+                    Eid = model.EmployeeId,
+                    RoleId = model.RoleId,
+                    Amount = 10000 // Increased to 10000 to satisfy DB constraint
+                });
 
-            RecordLog("Salary", $"Assigned role ID {model.RoleId} to employee ID {model.EmployeeId}");
-            await _context.SaveChangesAsync();
+                RecordLog("Salary", $"Assigned role ID {model.RoleId} to employee ID {model.EmployeeId}");
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                TempData["Error"] = "Could not assign role. The database rejected the default salary amount. Please try setting the salary manually.";
+                return RedirectToAction(nameof(Index));
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -184,16 +199,34 @@ namespace EMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateSalary(int employeeId, int roleId, int baseSalary)
         {
-            var salary = await _context.Salaries.FindAsync(employeeId, roleId);
+            var salary = await _context.Salaries
+                .Include(s => s.Employee)
+                .Include(s => s.Role)
+                .FirstOrDefaultAsync(s => s.Eid == employeeId && s.RoleId == roleId);
+
             if (salary == null)
             {
                 return NotFound();
             }
 
+            if (baseSalary < 10000)
+            {
+                ModelState.AddModelError("Amount", "Salary amount must be at least 10000 according to system policy.");
+                return View(salary);
+            }
+
             salary.Amount = baseSalary;
             
-            RecordLog("Salary", $"Updated salary for employee ID {employeeId}, role ID {roleId}");
-            await _context.SaveChangesAsync();
+            try
+            {
+                RecordLog("Salary", $"Updated salary for employee ID {employeeId}, role ID {roleId}");
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError(string.Empty, "The database rejected this salary amount. Please ensure it meets all system requirements (e.g., minimum 10000).");
+                return View(salary);
+            }
             return RedirectToAction(nameof(Index));
         }
     }

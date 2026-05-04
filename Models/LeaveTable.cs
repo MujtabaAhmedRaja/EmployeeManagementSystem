@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EMS.Models;
 
 /// <summary>
@@ -8,6 +11,8 @@ public class LeaveTable
     /// <summary>
     /// Unique identifier for the leave request.
     /// </summary>
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int LeaveId { get; set; }
 
     /// <summary>

@@ -26,10 +26,17 @@
         {
             <tr>
                 <td>@salary.Employee?.EName</td>
-                <td>@salary.Role?.RoleName</td>
-                <td>@salary.Amount.ToString("C0")</td>
+                <td>@(salary.Role?.RoleName ?? "Unassigned")</td>
+                <td>@(salary.Amount > 0 ? salary.Amount.ToString("C0") : "N/A")</td>
                 <td>
-                    <a asp-action="UpdateSalary" asp-route-employeeId="@salary.Eid" asp-route-roleId="@salary.RoleId" class="btn btn-sm btn-warning">Update</a>
+                    @if (salary.RoleId > 0)
+                    {
+                        <a asp-action="UpdateSalary" asp-route-employeeId="@salary.Eid" asp-route-roleId="@salary.RoleId" class="btn btn-sm btn-warning">Update</a>
+                    }
+                    else
+                    {
+                        <a asp-action="SetSalary" class="btn btn-sm btn-success">Set Salary</a>
+                    }
                 </td>
             </tr>
         }

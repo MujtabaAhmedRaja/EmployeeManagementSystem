@@ -201,3 +201,4 @@ D:\WT\DBS_Project\Employee Management System\EMS\bin\Debug\net10.0\runtimes\win\
 D:\WT\DBS_Project\Employee Management System\EMS\bin\Debug\net10.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\WT\DBS_Project\Employee Management System\EMS\obj\Debug\net10.0\EMS.csproj.AssemblyReference.cache
 D:\WT\DBS_Project\Employee Management System\EMS\obj\Debug\net10.0\EMS.csproj.Up2Date
+D:\WT\DBS_Project\Employee Management System\EMS\obj\Debug\net10.0\EMS.sourcelink.json

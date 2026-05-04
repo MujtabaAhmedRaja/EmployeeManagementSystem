@@ -61,9 +61,6 @@ namespace EMS.Controllers
                 return View(employee);
             }
 
-            // Explicitly generate ID if database doesn't auto-generate it
-            int maxId = await _context.Employees.AnyAsync() ? await _context.Employees.MaxAsync(e => e.Eid) : 0;
-            employee.Eid = maxId + 1;
 
             _context.Add(employee);
             RecordLog("Employee", $"Created employee: {employee.EName}");

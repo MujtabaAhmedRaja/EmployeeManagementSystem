@@ -87,20 +87,35 @@ namespace EMS.Controllers
         /// <returns>The salary reports view.</returns>
         public async Task<IActionResult> SalaryReports()
         {
-            var salaryRecords = await _context.Salaries
-                .Include(s => s.Employee)
-                .Include(s => s.Role)
+            var employees = await _context.Employees
+                .Include(e => e.SalaryRecords)
+                .ThenInclude(s => s.Role)
                 .ToListAsync();
 
-            var report = salaryRecords.Select(s => new SalaryReportModel
-            {
-                EmployeeName = s.Employee?.EName,
-                RoleName = s.Role?.RoleName,
-                BaseSalary = s.Amount,
-                Allowances = 0,
-                Deductions = 0,
-                NetSalary = s.Amount
-            }).ToList();
+            var report = employees.SelectMany(e => 
+                e.SalaryRecords.Any() 
+                    ? e.SalaryRecords.Select(s => new SalaryReportModel
+                      {
+                          EmployeeName = e.EName,
+                          RoleName = s.Role?.RoleName,
+                          BaseSalary = s.Amount,
+                          Allowances = 0,
+                          Deductions = 0,
+                          NetSalary = s.Amount
+                      })
+                    : new List<SalaryReportModel> 
+                      { 
+                          new SalaryReportModel 
+                          { 
+                              EmployeeName = e.EName, 
+                              RoleName = "Unassigned", 
+                              BaseSalary = 0, 
+                              Allowances = 0, 
+                              Deductions = 0, 
+                              NetSalary = 0 
+                          } 
+                      }
+            ).ToList();
 
             ViewBag.TotalPayroll = report.Sum(r => r.NetSalary);
             return View(report);
