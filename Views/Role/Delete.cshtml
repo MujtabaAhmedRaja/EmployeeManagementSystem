@@ -1,0 +1,31 @@
+@model EMS.Models.Role
+
+@{
+    ViewData["Title"] = "Delete Role";
+}
+
+<h2 class="text-danger">Delete Role</h2>
+<p class="lead">Are you sure you want to delete this role? This action cannot be undone.</p>
+<hr />
+
+<div class="card shadow-sm col-md-6 p-0">
+    <div class="card-header bg-danger text-white">
+        Role Information
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4">Role ID</dt>
+            <dd class="col-sm-8">@Model.RoleId</dd>
+            
+            <dt class="col-sm-4">Role Name</dt>
+            <dd class="col-sm-8">@Model.RoleName</dd>
+        </dl>
+    </div>
+    <div class="card-footer bg-light text-right">
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="RoleId" />
+            <button type="submit" class="btn btn-danger px-4">Confirm Delete</button>
+            <a asp-action="Index" class="btn btn-secondary px-4">Cancel</a>
+        </form>
+    </div>
+</div>

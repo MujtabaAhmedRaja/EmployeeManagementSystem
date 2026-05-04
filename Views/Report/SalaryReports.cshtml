@@ -1,0 +1,46 @@
+@model IEnumerable<EMS.Models.SalaryReportModel>
+
+@{
+    ViewData["Title"] = "Salary Reports";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Salary Reports</h2>
+    <div class="d-flex gap-2">
+        <input type="month" class="form-control d-inline-block w-auto" value="@DateTime.Now.ToString("yyyy-MM")" />
+        <button class="btn btn-secondary" onclick="window.print()">Print Report</button>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>Total Payroll Amount: <strong>@ViewBag.TotalPayroll.ToString("C")</strong></h5>
+        <p class="text-muted">Current payroll summary</p>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered mt-4">
+    <thead class="table-dark">
+        <tr>
+            <th>Employee</th>
+            <th>Role</th>
+            <th>Base Salary</th>
+            <th>Allowances</th>
+            <th>Deductions</th>
+            <th>Net Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var salary in Model)
+        {
+            <tr>
+                <td>@salary.EmployeeName</td>
+                <td>@salary.RoleName</td>
+                <td>@salary.BaseSalary.ToString("C")</td>
+                <td>@salary.Allowances.ToString("C")</td>
+                <td>@salary.Deductions.ToString("C")</td>
+                <td>@salary.NetSalary.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>

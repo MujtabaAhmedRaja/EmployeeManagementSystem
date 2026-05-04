@@ -1,0 +1,108 @@
+@model EMS.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    .welcome-banner {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 4rem 3rem;
+        border-radius: var(--border-radius-lg);
+        box-shadow: 0 15px 35px rgba(118, 75, 162, 0.2);
+        animation: fadeIn 0.8s ease-in-out;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-banner::after {
+        content: '';
+        position: absolute;
+        top: -60%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .welcome-title {
+        font-weight: 800;
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: -1px;
+    }
+    
+    .welcome-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        font-weight: 300;
+        max-width: 600px;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="welcome-banner">
+            <h1 class="welcome-title">Welcome back, @(User.Identity?.Name ?? "User")!</h1>
+            <p class="welcome-subtitle mt-3">
+                You are securely logged into the Employee Management System. Use the sidebar menu to navigate through your modules, manage staff, review attendance, and distribute payroll.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="mb-2">Employees</h5>
+            <p class="display-5 mb-0">@Model.EmployeeCount</p>
+            <small class="text-muted">Total active employees in the database</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="mb-2">Departments</h5>
+            <p class="display-5 mb-0">@Model.DepartmentCount</p>
+            <small class="text-muted">Departments currently configured</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="mb-2">Attendance Records</h5>
+            <p class="display-5 mb-0">@Model.AttendanceCount</p>
+            <small class="text-muted">Total attendance entries recorded</small>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="mb-2">Leave Requests</h5>
+            <p class="display-5 mb-0">@Model.LeaveRequestCount</p>
+            <small class="text-muted">Leave applications pending or processed</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="mb-2">Salary Entries</h5>
+            <p class="display-5 mb-0">@Model.SalaryEntryCount</p>
+            <small class="text-muted">Payroll records defined for employees</small>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4">
+            <h5 class="mb-2">Roles</h5>
+            <p class="display-5 mb-0">@Model.RoleCount</p>
+            <small class="text-muted">Roles available in the system</small>
+        </div>
+    </div>
+</div>

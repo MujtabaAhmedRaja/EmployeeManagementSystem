@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EMS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EMS.styles.css" asp-append-version="true" />
+</head>
+<body>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="layout-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar d-flex flex-column">
+            <a asp-controller="Home" asp-action="Index" class="sidebar-brand">
+                EMS Portal
+            </a>
+            <ul class="sidebar-nav flex-grow-1">
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Employee" asp-action="Index">Employees</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Department" asp-action="Index">Departments</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Attendance" asp-action="Index">Attendance</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="RoleSalary" asp-action="Index">Payroll System</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Role" asp-action="Index">Roles</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Report" asp-action="Index">Reports</a>
+                </li>
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" asp-area="" asp-controller="Log" asp-action="Index">Activity Logs</a>
+                </li>
+            </ul>
+
+            <div class="mt-auto">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-white text-primary d-flex align-items-center justify-content-center me-2" style="width: 40px; height: 40px; font-weight: bold;">
+                        @(User.Identity.Name?.Substring(0, 1).ToUpper() ?? "U")
+                    </div>
+                    <div>
+                        <div class="text-white fw-bold">@User.Identity.Name</div>
+                        <small style="color: rgba(255,255,255,0.7);">@User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</small>
+                    </div>
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-grid">
+                    <button type="submit" class="btn btn-outline-light btn-sm rounded-pill">Sign Out</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+}
+else
+{
+    <!-- Centered Canvas for Unauthenticated Users (Login/Signup) -->
+    <div class="layout-centered">
+        <main role="main" class="container">
+            @RenderBody()
+        </main>
+    </div>
+}
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

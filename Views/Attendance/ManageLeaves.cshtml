@@ -1,0 +1,43 @@
+@model IEnumerable<EMS.Models.LeaveTable>
+
+@{
+    ViewData["Title"] = "Manage Leaves";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Manage Leaves (Approve/Reject)</h2>
+    <a asp-action="Index" class="btn btn-secondary">Back to Attendance</a>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Employee</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var leave in Model)
+        {
+            <tr>
+                <td>@leave.Employee?.EName</td>
+                <td>@leave.Reason</td>
+                <td>@leave.Status</td>
+                <td>
+                    <form asp-action="ProcessLeave" method="post" class="d-inline">
+                        <input type="hidden" name="leaveId" value="@leave.LeaveId" />
+                        <input type="hidden" name="action" value="Approve" />
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                    <form asp-action="ProcessLeave" method="post" class="d-inline">
+                        <input type="hidden" name="leaveId" value="@leave.LeaveId" />
+                        <input type="hidden" name="action" value="Reject" />
+                        <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,85 @@
+@model EMS.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Reports Dashboard";
+}
+
+<div class="row mt-4 g-4">
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <h5 class="card-title">Employees</h5>
+            <p class="display-6">@Model.EmployeeCount</p>
+            <p class="text-muted">Employees stored in the database</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <h5 class="card-title">Departments</h5>
+            <p class="display-6">@Model.DepartmentCount</p>
+            <p class="text-muted">Active department records</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <h5 class="card-title">Payroll Entries</h5>
+            <p class="display-6">@Model.SalaryEntryCount</p>
+            <p class="text-muted">Salary rows stored in the database</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <h5 class="card-title">Attendance Records</h5>
+            <p class="display-6">@Model.AttendanceCount</p>
+            <p class="text-muted">Attendance records captured so far</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <h5 class="card-title">Leave Requests</h5>
+            <p class="display-6">@Model.LeaveRequestCount</p>
+            <p class="text-muted">Leave applications pending or processed</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 h-100">
+            <h5 class="card-title">Roles</h5>
+            <p class="display-6">@Model.RoleCount</p>
+            <p class="text-muted">Roles available in the system</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Employee Details</h5>
+                <p class="card-text text-muted">View comprehensive employee information across departments.</p>
+                <a asp-action="EmployeeDetails" class="btn btn-outline-primary mt-3">View Report</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Attendance Reports</h5>
+                <p class="card-text text-muted">Analyze attendance trends and leave summaries.</p>
+                <a asp-action="AttendanceReports" class="btn btn-outline-primary mt-3">View Report</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Salary Reports</h5>
+                <p class="card-text text-muted">Generate payroll and allowances distributions.</p>
+                <a asp-action="SalaryReports" class="btn btn-outline-primary mt-3">View Report</a>
+            </div>
+        </div>
+    </div>
+</div>

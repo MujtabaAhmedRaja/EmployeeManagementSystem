@@ -1,0 +1,64 @@
+@model IEnumerable<EMS.Models.AttendanceReportModel>
+
+@{
+    ViewData["Title"] = "Attendance Reports";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Attendance Reports</h2>
+    <div class="d-flex gap-2">
+        <input type="month" class="form-control d-inline-block w-auto" value="@DateTime.Now.ToString("yyyy-MM")" />
+        <button class="btn btn-secondary" onclick="window.print()">Print</button>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h6>Total Present Days</h6>
+                <h3>@Model.Sum(x => x.PresentDays)</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <h6>Total Absent Days</h6>
+                <h3>@Model.Sum(x => x.AbsentDays)</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <h6>Leaves Taken</h6>
+                <h3>@Model.Sum(x => x.LeaveDays)</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered mt-4">
+    <thead class="table-dark">
+        <tr>
+            <th>Employee</th>
+            <th>Present</th>
+            <th>Absent</th>
+            <th>Leaves</th>
+            <th>Attendance %</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmployeeName</td>
+                <td>@item.PresentDays</td>
+                <td>@item.AbsentDays</td>
+                <td>@item.LeaveDays</td>
+                <td>@item.AttendancePercentage</td>
+            </tr>
+        }
+    </tbody>
+</table>

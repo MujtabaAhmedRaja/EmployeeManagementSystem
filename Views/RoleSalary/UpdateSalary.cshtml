@@ -1,0 +1,32 @@
+@model EMS.Models.Salary
+
+@{
+    ViewData["Title"] = "Update Salary";
+}
+
+<h2>Update Salary Details</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="UpdateSalary" method="post">
+            <input type="hidden" name="employeeId" value="@Model.Eid" />
+            <input type="hidden" name="roleId" value="@Model.RoleId" />
+
+            <div class="form-group mb-3">
+                <label>Employee Name</label>
+                <input type="text" class="form-control" value="@Model.Employee?.EName" disabled />
+            </div>
+            <div class="form-group mb-3">
+                <label>Role</label>
+                <input type="text" class="form-control" value="@Model.Role?.RoleName" disabled />
+            </div>
+            <div class="form-group mb-3">
+                <label for="baseSalary">Base Salary</label>
+                <input type="number" class="form-control" id="baseSalary" name="baseSalary" value="@Model.Amount" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Update Salary</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

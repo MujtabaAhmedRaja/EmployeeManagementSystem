@@ -1,0 +1,31 @@
+@model EMS.Models.Employee
+
+@{
+    ViewData["Title"] = "Delete Employee";
+}
+
+<h2>Delete Employee</h2>
+<h4 class="text-danger">Are you sure you want to delete this employee?</h4>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Name</dt>
+        <dd class="col-sm-10">@Model.EName</dd>
+        
+        <dt class="col-sm-2">Age</dt>
+        <dd class="col-sm-10">@Model.EAge</dd>
+        
+        <dt class="col-sm-2">City</dt>
+        <dd class="col-sm-10">@Model.ECity</dd>
+        
+        <dt class="col-sm-2">Department</dt>
+        <dd class="col-sm-10">@Model.Department?.DepName</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input asp-for="Eid" type="hidden" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

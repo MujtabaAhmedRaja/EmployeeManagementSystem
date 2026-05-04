@@ -1,0 +1,41 @@
+@model EMS.Models.AssignRoleViewModel
+
+@{
+    ViewData["Title"] = "Assign Role";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Assign Role to Employee</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="AssignRole" method="post">
+                    <div class="form-group mb-3">
+                        <label asp-for="EmployeeId" class="form-label font-weight-bold"></label>
+                        <select asp-for="EmployeeId" asp-items="Model.Employees" class="form-control">
+                            <option value="">-- Select Employee --</option>
+                        </select>
+                        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="RoleId" class="form-label font-weight-bold"></label>
+                        <select asp-for="RoleId" asp-items="Model.Roles" class="form-control">
+                            <option value="">-- Select Role --</option>
+                        </select>
+                        <span asp-validation-for="RoleId" class="text-danger"></span>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-dark px-4">Assign Role</button>
+                        <a asp-action="Index" class="btn btn-secondary px-4">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

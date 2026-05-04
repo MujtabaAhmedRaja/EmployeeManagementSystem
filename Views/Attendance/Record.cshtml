@@ -1,0 +1,43 @@
+@model EMS.Models.AttendanceRecordViewModel
+
+@{
+    ViewData["Title"] = "Record Attendance";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Record Attendance</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Record" method="post">
+                    <div class="form-group mb-3">
+                        <label asp-for="EmployeeId" class="form-label font-weight-bold"></label>
+                        <select asp-for="EmployeeId" asp-items="Model.Employees" class="form-control">
+                            <option value="">-- Select Employee --</option>
+                        </select>
+                        <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Status" class="form-label font-weight-bold"></label>
+                        <select asp-for="Status" class="form-control">
+                            <option value="Present">Present</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Half Day">Half Day</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary px-4">Submit</button>
+                        <a asp-action="Index" class="btn btn-secondary px-4">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,36 @@
+@model IEnumerable<EMS.Models.Log>
+
+@{
+    ViewData["Title"] = "System Logs";
+}
+
+<div class="mb-4">
+    <h2>System Activity Logs</h2>
+    <p class="text-muted">History of all administrative actions performed in the system.</p>
+</div>
+
+<table class="table table-striped table-bordered shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Date & Time</th>
+            <th>Table Affected</th>
+            <th>Action Performed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ActionDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td><span class="badge badge-info text-dark">@item.TableName</span></td>
+                <td>@item.Action</td>
+            </tr>
+        }
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="3" class="text-center">No logs found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

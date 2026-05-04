@@ -1,0 +1,41 @@
+@model IEnumerable<EMS.Models.Role>
+
+@{
+    ViewData["Title"] = "Manage Roles";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Manage Roles</h2>
+    <a asp-action="Create" class="btn btn-primary">Create New Role</a>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<table class="table table-hover table-bordered shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Role ID</th>
+            <th>Role Name</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RoleId</td>
+                <td>@item.RoleName</td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.RoleId" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.RoleId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

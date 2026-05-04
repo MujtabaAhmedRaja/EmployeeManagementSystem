@@ -1,0 +1,28 @@
+@model EMS.Models.Role
+
+@{
+    ViewData["Title"] = "Create Role";
+}
+
+<h2>Create New Role</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post" class="shadow p-4 rounded bg-light">
+            <div class="form-group mb-3">
+                <label asp-for="RoleName" class="form-label font-weight-bold"></label>
+                <input asp-for="RoleName" class="form-control" placeholder="Enter role name" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success px-4">Create</button>
+                <a asp-action="Index" class="btn btn-secondary px-4">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

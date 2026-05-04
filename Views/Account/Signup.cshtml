@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card mt-5">
+            <div class="card-header text-center border-0 bg-transparent pt-4">
+                <h3 class="fw-bold">Create Account</h3>
+                <p class="text-muted">Fill in your details to register as a new employee.</p>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <form asp-controller="Account" asp-action="Signup" method="post">
+                    <div class="form-group mb-3">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Mujtaba Ahmed" required>
+                    </div>
+                    @* <div class="form-group mb-3">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="mujtaba@gmail.com" required>
+                    </div> *@
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="mujtabaahmed" required>
+                        </div>
+                        <div class="col-md-6 form-group mb-4">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 mb-3">Register Now</button>
+                    <div class="text-center">
+                        <span class="text-muted">Already have an account?</span> 
+                        <a asp-controller="Account" asp-action="Login" class="text-primary text-decoration-none fw-bold">Sign In here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

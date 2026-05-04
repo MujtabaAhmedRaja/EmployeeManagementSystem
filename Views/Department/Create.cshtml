@@ -1,0 +1,22 @@
+@model EMS.Models.Department
+
+@{
+    ViewData["Title"] = "Add Department";
+}
+
+<h2>Add Department</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+            <div class="form-group mb-3">
+                <label asp-for="DepName"></label>
+                <input asp-for="DepName" class="form-control" />
+                <span asp-validation-for="DepName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
